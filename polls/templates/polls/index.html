@@ -4,5 +4,54 @@
 {% block title %}Polls{% endblock %}
 
 {% block content %}
-<h1>Polls</h1>
+<main>
+<div class="inner-wrapper">
+    <div class="page-wrapper">
+        <header>
+            <h1>Polls</h1>
+        </header>
+
+        <!-- dropdown to sort -->
+        <div class="sort-dropdown d-grid gap-1 d-md-flex justify-content-md-end inline">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    Sort by Vote
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                    <li><a href="/polls/?sort=votes&reverse=1">Most Popular Vote</a></li>
+                    <li><a href="/polls/?sort=votes&reverse=0">Less Popular Vote</a></li>
+                </ul>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    Sort by Vote Time
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                    <li><a href="/polls/?sort=vote_time&reverse=1">Recently vote time</a></li>
+                    <li><a href="/polls/?sort=vote_time&reverse=0">Voted long time ago</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="question-list">
+            {% if latest_question_list %}
+
+                {% for question in latest_question_list %}
+                    <div class="item-wrapper">
+                        <a href="{% url 'polls:detail' question.id %}" class="item" title="{{ question.question_text }}">
+                            <h2>{{ question.question_text }}</h2>
+                        </a>
+                    </div>
+                {% endfor %}
+
+            {% else %}
+                <p>No polls are available.</p>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+</main>
 {% endblock %}

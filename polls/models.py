@@ -10,6 +10,17 @@ class Question(models.Model):
     def __str__(self):
         return self.question_text
 
+    def was_published_recently(self):
+        now = timezone.now()
+        return now - datetime.timedelta(days=1) <= self.pub_date <= now
+
+    def get_sum_score(self): # total votes for each question
+        choices = list(self.choice_set.all()) # all choices of that question
+        sum = 0
+        for choice in choices:
+            sum += choice.votes_score
+        return sum
+
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
