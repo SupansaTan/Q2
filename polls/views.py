@@ -94,3 +94,10 @@ def vote(request, question_id):
         userVote.save()
 
         return redirect(f'/{question.id}/result') # redirect to result
+
+def result(request, question_id):
+    question = Question.objects.get(pk=question_id) # get question
+
+    return render(request, 'polls/result.html', {
+            'question': question
+        })
