@@ -23,6 +23,15 @@ class Question(models.Model):
             sum += choice.votes_score
         return sum
 
+    def get_latest_vote_time(self):
+        choices = list(self.choice_set.all())
+        latest = choices[0].latest_vote_time_obj()
+        for choice in choices:
+            votetime = choice.latest_vote_time_obj()
+            if  votetime > latest:
+                latest = votetime
+        return latest
+
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
@@ -35,6 +44,12 @@ class Choice(models.Model):
         latest_vote = self.votes.latest('time')
         latest_time = latest_vote.time.astimezone(tz).strftime("%d/%m/%Y, %H:%M:%S")
         return latest_time
+
+    def latest_vote_time_obj(self): # object lastest vote time of each choice
+        if self.votes.exists():
+            latest_vote = self.votes.latest('time').time.astimezone(tz)
+            return latest_vote
+        return datetime.datetime(2000,1,1).astimezone(tz)
 
     def get_percent(self):  # percentage of votes for each choice
         choice_percent = self.votes_score/self.question.get_sum_score() *100
