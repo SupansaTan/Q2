@@ -62,3 +62,11 @@ def index(request):
         return render(request, 'polls/index.html', {
             'latest_question_list': question_sorted
         })
+
+def detail(request, question_id):
+    # get detail
+    question = Question.objects.get(pk=question_id)
+
+    return render(request, 'polls/detail.html', {
+            'question': question
+        })

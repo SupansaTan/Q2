@@ -1,0 +1,35 @@
+{% extends 'polls/base.html' %}
+{% load static %}
+
+{% block title %}Polls{% endblock %}
+
+{% block content %}
+<main>
+    <div class="inner-wrapper lrg">
+        <!-- question -->
+        <div class="question-head">
+            <h1>{{ question.question_text }}</h1>
+        </div>
+
+        <!-- navigation to question list page -->
+        <div class="navigate">
+            <a href={% url 'polls:index' %} class="previous-btn">
+                <button class="btn"><i class="arrowleft"></i></button>
+            </a>
+        </div>
+
+        <!-- choices -->
+        <div class="choice">
+
+            {% for choice in question.choice_set.all %}
+            <div class="choice-wrapper">
+                <input type="checkbox" class="btn-check" id="choice{{ forloop.counter }}" name="choice" value="{{ choice.id }}" autocomplete="off">
+                <label class="btn btn-outline-primary" for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</main>
+
+{% endblock %}
