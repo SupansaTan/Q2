@@ -1,5 +1,4 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 from django.views import generic
@@ -70,3 +69,27 @@ def detail(request, question_id):
     return render(request, 'polls/detail.html', {
             'question': question
         })
+
+def vote(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    
+    try:
+        # get choice selected
+        choice_id = request.POST['choice']
+        selected_choice = question.choice_set.get(pk=choice_id)
+    except (KeyError, Choice.DoesNotExist):
+        # Redisplay the question voting form.
+        return render(request, 'polls/detail.html', {
+            'question': question
+        })
+    else:
+        # add score of that choice
+        selected_choice.votes_score += 1
+        selected_choice.save()
+
+        # add vote time when user submitted vote
+        userVote = Vote()
+        userVote.choice = selected_choice
+        userVote.save()
+
+        return redirect(f'/{question.id}/result') # redirect to result

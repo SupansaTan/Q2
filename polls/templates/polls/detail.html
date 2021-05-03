@@ -19,16 +19,23 @@
         </div>
 
         <!-- choices -->
-        <div class="choice">
+        <form action="{% url 'polls:vote' question.id %}" method="post">
+        {% csrf_token %}
+        
+            <div class="choice">
 
-            {% for choice in question.choice_set.all %}
-            <div class="choice-wrapper">
-                <input type="checkbox" class="btn-check" id="choice{{ forloop.counter }}" name="choice" value="{{ choice.id }}" autocomplete="off">
-                <label class="btn btn-outline-primary" for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+                {% for choice in question.choice_set.all %}
+                <div class="choice-wrapper">
+                    <input type="checkbox" class="btn-check" id="choice{{ forloop.counter }}" name="choice" value="{{ choice.id }}" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+                </div>
+                {% endfor %}
+
             </div>
-            {% endfor %}
-
-        </div>
+            <div class="submit mb-2">
+                <input class="btn" id="submit-btn" type="submit" value="Submit vote">
+            </div>
+        </form>
     </div>
 </main>
 
