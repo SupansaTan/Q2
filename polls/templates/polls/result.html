@@ -3,6 +3,10 @@
 
 {% block title %}Polls{% endblock %}
 
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/result.css' %}">
+{% endblock %}
+
 {% block content %}
 <main>
     <div class="inner-wrapper lrg">
@@ -26,8 +30,14 @@
                 <div class="result-heading">
                     <h2 class="name">{{ choice.choice_text }}</h2>
                 </div>
+                <div class="result-bar">
+                    <div class="progress-bar" style="width: {{ choice.get_percent }}%;"></div>
+                </div>
                 <div id="scorediv" class="votes-number">
                     <p id="score">{{ choice.votes_score }} vote{{ choice.votes_score|pluralize }}</p>
+                </div>
+                <div class="lasttime-vote">
+                    <p>Last vote time : {{choice.latest_vote_time}}</p>
                 </div>
             </div>
             {% endfor %}
