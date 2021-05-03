@@ -101,3 +101,7 @@ def result(request, question_id):
     return render(request, 'polls/result.html', {
             'question': question
         })
+
+def add(request):
+    if request.method == 'GET':
+        return render(request, 'polls/add.html')

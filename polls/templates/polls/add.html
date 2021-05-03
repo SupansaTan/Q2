@@ -1,0 +1,29 @@
+{% extends 'polls/base.html' %}
+{% load static %}
+
+{% block title %}Add Question{% endblock %}
+
+{% block content %}
+<main>
+<div class="inner-wrapper">
+    <div class="page-wrapper">
+        <header>
+            <h1>Add Question</h1>
+        </header>
+
+        <!-- form -->
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="WordInput" class="form-label">Question</label>
+                    <input type="text" name ="word_input" id="WordInput" class="form-control" required>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary w-100">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main>
+{% endblock %}

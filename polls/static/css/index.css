@@ -104,3 +104,15 @@ header {
 	color: #333;
 	line-height: 30px;
 }
+
+/* add button */
+.add.button .btn {
+    background-color: rgb(18, 130, 235);
+    color: white;
+    text-decoration: none;
+    margin: 5px;
+}
+
+.left-button {
+    margin-left: 6%;
+}
