@@ -36,6 +36,13 @@
                 <input class="btn" id="submit-btn" type="submit" value="Submit vote">
             </div>
         </form>
+
+        <!-- not select a choice -->
+        {% if error_message %}
+        <div class="message">
+            <p>{{ error_message }}</p>
+        </div>
+        {% endif %}
     </div>
 </main>
 
