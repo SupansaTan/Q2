@@ -1,6 +1,10 @@
 {% extends 'polls/base.html' %}
 {% load static %}
 
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/add.css' %}">
+{% endblock %}
+
 {% block title %}Add Question{% endblock %}
 
 {% block content %}
@@ -11,16 +15,33 @@
             <h1>Add Question</h1>
         </header>
 
+        <!-- navigation to question list page -->
+        <div class="navigate">
+            <a href={% url 'polls:index' %} class="previous-btn">
+                <button class="btn"><i class="arrowleft"></i></button>
+            </a>
+        </div>
+
+        <!-- failed alert -->
+        {% if failed %}
+            <div class="alert alert-danger" role="alert">
+            {{ failed }}
+            </div>
+        {% endif %}
+
         <!-- form -->
         <div class="card">
             <div class="card-body">
-                <div class="mb-3">
-                    <label for="WordInput" class="form-label">Question</label>
-                    <input type="text" name ="word_input" id="WordInput" class="form-control" required>
-                </div>
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary w-100">Submit</button>
-                </div>
+                <form action="" method="post">
+                {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="question" class="form-label">Question</label>
+                        <input type="text" name ="question" id="question" class="form-control" required>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary w-100">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

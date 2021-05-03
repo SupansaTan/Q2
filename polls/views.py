@@ -1,7 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.core.exceptions import ObjectDoesNotExist
-from django.urls import reverse
-from django.views import generic
+from django.db.models import Q
 from django.utils import timezone
 import datetime
 
@@ -102,6 +101,20 @@ def result(request, question_id):
             'question': question
         })
 
-def add(request):
+def addQuestion(request):
     if request.method == 'GET':
         return render(request, 'polls/add.html')
+
+    elif request.method == 'POST':
+        question = request.POST.get('question').strip()
+
+        if not Question.objects.filter(Q(question_text=question)).exists(): # new question
+            new_question = Question(question_text=question)
+            new_question.save()
+
+            return redirect('/')
+    
+        # question exists
+        return render(request,'polls/add.html',{
+                'failed': f"Oops ! '{question}' already exists"
+            })
